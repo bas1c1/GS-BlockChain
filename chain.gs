@@ -50,7 +50,7 @@ def blockchain_c() {
 
 		block : __init__(block, "datatime_now", father : transactions, "0 ")
 		block : mine_block(block, father : proofOfWorkDifficulty)
-		
+		/*
 		this_chain = father : chain
 		last_block = this_chain[length(this_chain)-1]
 		block prev_hash := last_block : hash
@@ -58,7 +58,7 @@ def blockchain_c() {
 		temp = father : chain
 		append("temp", block)
 		father chain := temp
-		father transactions := new_stack()
+		father transactions := new_stack()*/
 	}
 
 	BlockChain is_valid_f := ldef(father) {
