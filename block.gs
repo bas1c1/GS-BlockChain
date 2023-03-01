@@ -37,9 +37,8 @@ def block_c() {
 	Block create_hash := ldef(father) {
 		transactions = father:transactions
 		typedef string raw_data = father:prev_hash + father:datatime + get_stack("transactions") + to_string(father:nonce)
-		//bytes = to_string(byte(raw_data))
 		father hash := to_string(raw_data)
-		return raw_data//to_string(bytes)
+		return raw_data
 	}
 	return Block
 }
