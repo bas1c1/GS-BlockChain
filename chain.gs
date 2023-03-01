@@ -1,3 +1,11 @@
+def nlength(val) {
+	res = 0
+	foreach val to "k" {
+		res++
+	}
+	return res
+}
+
 def blockchain_c() {
 	enum BlockChain {
 		proofOfWorkDifficulty,
@@ -36,41 +44,44 @@ def blockchain_c() {
 		import("transaction.gs")
 		import("block.gs")
 
-		minerRewardTransaction = transaction_c()
-		block = block_c()
+		Transaction = transaction_c()
+		Block = block_c()
 
-		//Transaction inst(from, _to, amount) minerRewardTransaction
+		Transaction inst(from, _to, amount) minerRewardTransaction
 		
 		minerRewardTransaction : __init__(minerRewardTransaction, NULL, miner_addr, father:reward)
 		temp = father : transactions
 		append("temp", minerRewardTransaction)
 		father transactions := temp
 
-		//Block inst() block
+		Block inst() block
 
 		block : __init__(block, "datatime_now", father : transactions, "0 ")
 		block : mine_block(block, father : proofOfWorkDifficulty)
-		/*
+		
 		this_chain = father : chain
-		last_block = this_chain[length(this_chain)-1]
-		block prev_hash := last_block : hash
+		last_block = this_chain[nlength(this_chain)-1]
+		
+		//NOT WORKING
+		//block prev_hash := last_block : hash
 		
 		temp = father : chain
 		append("temp", block)
 		father chain := temp
-		father transactions := new_stack()*/
+		father transactions := new_stack()
 	}
 
 	BlockChain is_valid_f := ldef(father) {
-		typedef stack this_chain = father : chain
+		temp = father : chain
 
-		for i = 1; i < length("this_chain"); i++ {
-			prev_block = get_by_index("this_chain", i-1)
-			curr_block = get_by_index("this_chain", i)
-			//if (curr_block : prev_hash != prev_block : hash) {
-			//	father is_valid := false
-			//	return 0
-			//}
+		for i = 1; i < length("temp"); i++ {
+			prev_block = get_by_index("temp", i-1)
+			curr_block = get_by_index("temp", i)
+			//NOT WORKING
+			/*if (curr_block : prev_hash != prev_block : hash) {
+				father is_valid := false
+				return 0
+			}*/
 		}
 		father is_valid := true
 	}
@@ -96,15 +107,15 @@ def blockchain_c() {
 		import("transaction.gs")
 		import("block.gs")
 
-		new_transaction = transaction_c()
-		new_block = block_c()
+		Transaction = transaction_c()
+		Block = block_c()
 
-		//Transaction inst() new_transaction
+		Transaction inst() new_transaction
 
 		new_transaction : __init__(new_transaction, "", "", 0)
 		transactions = new_stack(new_transaction)
 
-		//Block inst() new_block
+		Block inst() new_block
 
 		new_block : __init__(new_block, "datatime", transactions, "0")
 		return new_block
